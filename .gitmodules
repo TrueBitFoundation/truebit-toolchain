@@ -7,3 +7,6 @@
 [submodule "modules/emsdk"]
 	path = modules/emsdk
 	url = https://github.com/juj/emsdk.git
+[submodule "modules/webasm-solidity"]
+	path = modules/webasm-solidity
+	url = https://github.com/TrueBitFoundation/webasm-solidity.git
