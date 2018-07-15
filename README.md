@@ -1,21 +1,77 @@
-# truebit-toolchain
-Utility for preparing Truebit tasks
+# TrueBit Toolchain
 
-Here is an example Dockerfile for installing emsdk, emscripten-module-wrapper, and ocaml-offchain
-https://github.com/mrsmkl/verification-truebit/blob/master/Dockerfile
+Getting started:
 
-See emscripten-module-wrapper README for examples of how truebit-toolchain is meant to be used https://github.com/TrueBitFoundation/emscripten-module-wrapper
+# Setup EMSDK
 
-The main purpose of this repo is to create an easy utility to prepare Truebit tasks. I.e. compile C++/Rust into WASM.
+cd ./modules/emsdk
 
-LLVM -> WASM is handled by emsdk
+```
+# Fetch the latest registry of available tools.
+./emsdk update
 
-A proper Truebit task is essentially a WASM module that has been injected with necessary code:
-Filesystem WASM module
-WASM metering
+# Download and install the latest SDK tools.
+./emsdk install latest
 
-This is handled by emscripten-module-wrapper
+# Make the "latest" SDK "active" for the current user. (writes ~/.emscripten file)
+./emsdk activate latest
 
-truebit-toolchain is essentially a wrapper around emsdk and emscripten-module-wrapper
+# Activate PATH and other environment variables in the current terminal
+source ./emsdk_env.sh
+```
+
+# Setup Interpreter
 
 
+Make usre you have ocaml installed and set to the correct version.
+
+```
+brew install opam  
+opam init -y
+opam switch 4.06.1
+```
+
+cd ./modules/ocaml-offchain
+
+```
+eval $(opam config env)
+opam install cryptokit yojson
+cd interpreter
+make
+```
+
+# Setup Module Wrapper
+
+cd ./modules/emscripten-module-wrapper
+
+```
+npm i
+```
+
+# Compile C to WASM
+
+```
+emcc -s WASM=1 ./src/reverse_alphabet.c -o ./src/reverse_alphabet.js
+```
+
+# Instrument WASM for TrueBit Interpreter  
+
+(this bit fails due to pathing issues which I'm about to address)
+
+```
+node modules/emscripten-module-wrapper/prepare.js ./src/reverse_alphabet.js --file ./src/alphabet.txt --file ./src/reverse_alphabet.txt --asmjs
+```
+
+
+## Future docker support
+
+
+```
+docker build . -t truebit-toolchain:latest
+
+docker run -it -v $(pwd):/src truebit-toolchain:latest /bin/bash
+
+docker run --rm -e EMCC_WASM_BACKEND=1 -v $(pwd):/src truebit-toolchain:latest emcc -s WASM=1 ./src/reverse_alphabet.c -o ./src/reverse_alphabet.js
+
+docker run --rm -e EMCC_WASM_BACKEND=1 -v $(pwd):/src truebit-toolchain:latest ./src/work.sh
+```

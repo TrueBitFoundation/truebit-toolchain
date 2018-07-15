@@ -31,6 +31,8 @@ RUN echo "2018-07-12" && apt-get update && apt-get install -y --no-install-recom
   default-jre \
   ninja-build \
   && opam init -y
+
+RUN opam switch 4.06.1
 	
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     apt-get install -y --no-install-recommends nodejs

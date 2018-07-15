@@ -1,0 +1,9 @@
+[submodule "modules/ocaml-offchain"]
+	path = modules/ocaml-offchain
+	url = https://github.com/TrueBitFoundation/ocaml-offchain.git
+[submodule "modules/emscripten-module-wrapper"]
+	path = modules/emscripten-module-wrapper
+	url = https://github.com/TrueBitFoundation/emscripten-module-wrapper.git
+[submodule "modules/emsdk"]
+	path = modules/emsdk
+	url = https://github.com/juj/emsdk.git
