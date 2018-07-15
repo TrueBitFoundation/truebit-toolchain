@@ -11,7 +11,7 @@ var host = argv["ipfs-host"] || "programming-progress.com"
 
 var ipfs = ipfsAPI(host, '5001', {protocol: 'http'})
 
-var tmp_dir = "/tmp/emscripten-module-wrapper" + Math.floor(Math.random() * Math.pow(2,32)).toString(32)
+var tmp_dir = __dirname + "/emscripten-module-wrapper" + Math.floor(Math.random() * Math.pow(2,32)).toString(32)
 
 var config = []
 
@@ -172,10 +172,11 @@ async function processTask(fname) {
     var mem_size = argv["memory-size"] || "25"
     var info = await spawnPromise(wasm, ["-m", "-input", "-table-size", "20", "-stack-size", "20", "-memory-size", mem_size, "-wasm", result_wasm].concat(args))
     if (argv.run) await spawnPromise(wasm, ["-m", "-table-size", "20", "-stack-size", "20", "-memory-size", mem_size, "-wasm", result_wasm].concat(args))
-    var hash = await uploadIPFS("globals.wasm")
-    console.log("cd", tmp_dir)
-    console.log("Uploaded to IPFS ", hash)
-    fs.writeFileSync("info.json", JSON.stringify({ipfshash: hash.hash, codehash: JSON.parse(info).vm.code, memsize:mem_size}))
+    
+    // var hash = await uploadIPFS("globals.wasm")
+    // console.log("cd", tmp_dir)
+    // console.log("Uploaded to IPFS ", hash)
+    // fs.writeFileSync("info.json", JSON.stringify({ipfshash: hash.hash, codehash: JSON.parse(info).vm.code, memsize:mem_size}))
 }
 
 argv._.forEach(processTask)
