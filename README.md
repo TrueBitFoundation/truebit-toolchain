@@ -56,12 +56,9 @@ emcc -s WASM=1 ./src/reverse_alphabet.c -o ./src/reverse_alphabet.js
 
 # Instrument WASM for TrueBit Interpreter  
 
-(this bit fails due to pathing issues which I'm about to address)
-
 ```
-cd ./modules/ocaml-offchain-preprocessor
-node prepare.js ./reverse_alphabet.js --file ./alphabet.txt --file ./reverse_alphabet.txt --asmjs
-```
+node ./modules/ocaml-offchain-preprocessor/prepare2.js ./src/reverse_alphabet.js --file ./src/alphabet.txt --file ./src/reverse_alphabet.txt --asmjs --output ./cool-task
+ ```
 
 
 ## Future docker support

@@ -1,4 +1,4 @@
-var source_dir = "/Users/orie/Desktop/truebit-toolchain/modules/ocaml-offchain-preprocessor//emscripten-module-wrappermcs4f3"
+var source_dir = "/Users/orie/Desktop/truebit-toolchain/cool-task"
 // The Module object: Our interface to the outside world. We import
 // and export values on it. There are various ways Module can be used:
 // 1. Not defined. We create it here

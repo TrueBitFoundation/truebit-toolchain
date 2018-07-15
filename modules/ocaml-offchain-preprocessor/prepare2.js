@@ -1,21 +1,38 @@
-const fs = require('fs');
 const argv = require('minimist')(process.argv.slice(2));
 const ipfsAPI = require('ipfs-api');
 const { spawn, execFile } = require('child_process');
 const path = require('path');
-
+const CWD = process.cwd();
+var fs = require('fs-extra');
 var dir = path.dirname(fs.realpathSync(__filename)) + '/';
+var tmp_dir = path.resolve(CWD, argv.output);
 
-// console.log('WHAT IS DIRRRRRR', dir)
+// dir +
+// '/emscripten-module-wrapper' +
+// Math.floor(Math.random() * Math.pow(2, 32)).toString(32);
+fs.mkdirSync(tmp_dir);
 
-var host = argv['ipfs-host'] || 'programming-progress.com';
+console.log(argv);
 
-var ipfs = ipfsAPI(host, '5001', { protocol: 'http' });
+// dirty...
+let wasm_file;
 
-var tmp_dir =
-    dir +
-  '/emscripten-module-wrapper' +
-  Math.floor(Math.random() * Math.pow(2, 32)).toString(32);
+// copy the module (js and wasm) to a temp directory.
+argv._.forEach(wasmFile => {
+  fs.copySync(path.resolve(CWD, wasmFile), path.resolve(tmp_dir, wasmFile));
+  wasm_file = wasmFile = wasmFile.replace(/.js$/, '.wasm');
+  fs.copySync(path.resolve(CWD, wasmFile), path.resolve(tmp_dir, wasmFile));
+});
+// copy the attached files
+argv.file.forEach(attachedFile => {
+  fs.copySync(
+    path.resolve(CWD, attachedFile),
+    path.resolve(tmp_dir, attachedFile)
+  );
+});
+
+// console.log('killed');
+// process.exit(1337);
 
 var config = [];
 
@@ -28,8 +45,6 @@ function readConfig() {
 }
 
 readConfig();
-
-fs.mkdirSync(tmp_dir);
 
 var wasm = dir + '../ocaml-offchain/interpreter/wasm';
 
@@ -46,16 +61,12 @@ var preamble = fs.readFileSync(dir + 'preamble.js');
 //     })
 // }
 
-function exec(cmd, args, dr) {
+function exec(cmd, args) {
   return new Promise(function(cont, err) {
     // console.log('exec: ', cmd, args, dr);
-    execFile(cmd, args, { cwd: dr || tmp_dir }, function(
-      error,
-      stdout,
-      stderr
-    ) {
-    //   if (stderr) console.error('error ', stderr, args);
-    //   if (stdout) console.log('output ', stdout, args);
+    execFile(cmd, args, { cwd: tmp_dir }, function(error, stdout, stderr) {
+      //   if (stderr) console.error('error ', stderr, args);
+      //   if (stdout) console.log('output ', stdout, args);
       /*            if (error) err(error)
             else cont(stdout) */
       cont(stdout);
@@ -63,11 +74,11 @@ function exec(cmd, args, dr) {
   });
 }
 
-function spawnPromise(cmd, args, dr) {
+function spawnPromise(cmd, args) {
   return new Promise(function(cont, err) {
     // console.log('exec: ', cmd + ' ' + args.join(' '), dr);
     var res = '';
-    const p = spawn(cmd, args, { cwd: dr || tmp_dir });
+    const p = spawn(cmd, args, { cwd: tmp_dir });
 
     p.on('error', err => {
       console.log('Failed to start subprocess.');
@@ -76,11 +87,11 @@ function spawnPromise(cmd, args, dr) {
 
     p.stdout.on('data', data => {
       res += data;
-    //   console.log(`stdout: ${data}`);
+      //   console.log(`stdout: ${data}`);
     });
 
     p.stderr.on('data', data => {
-    //   console.log(`stderr: ${data}`);
+      //   console.log(`stderr: ${data}`);
     });
 
     p.on('close', code => {
@@ -133,34 +144,15 @@ async function processTask(fname) {
     'var source_dir = "' + tmp_dir + '"\n' + str
   );
 
-  var wasm_file = fname.replace(/.js$/, '.wasm');
-
-  await exec('cp', [wasm_file, tmp_dir + '/' + wasm_file], process.cwd());
-
-//   console.log(argv);
+  //   console.log(argv);
 
   clean(argv, 'arg');
   clean(argv, 'file');
 
-//   console.log(argv);
+  //   console.log(argv);
   if (argv.analyze) {
-    for (var i = 0; i < argv.file.length; i++) {
-      await exec(
-        'cp',
-        [argv.file[i], tmp_dir + '/' + argv.file[i]],
-        process.cwd()
-      );
-    }
     await exec('node', ['prepared.js'].concat(argv.arg));
     // return
-  }
-
-  for (var i = 0; i < argv.file.length; i++) {
-    await exec(
-      'cp',
-      [argv.file[i], tmp_dir + '/' + argv.file[i]],
-      process.cwd()
-    );
   }
 
   if (argv.asmjs)
