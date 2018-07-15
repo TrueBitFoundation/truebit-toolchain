@@ -64,10 +64,26 @@ node ./modules/ocaml-offchain-preprocessor/prepare2.js ./src/reverse_alphabet.js
 ## Future docker support
 
 
+
 ```
 docker build . -t truebit-toolchain:latest
 
-docker run -it -v $(pwd):/src truebit-toolchain:latest /bin/bash
+docker run -it truebit-toolchain:latest /bin/bash
+
+
+
+# Size in bytes
+# docker images
+# docker image inspect truebit-toolchain:latest --format='{{.Size}}'
+
+
+
+
+
+
+
+
+docker run -it -v $(pwd):/truebit-toolchain truebit-toolchain:latest /bin/bash
 
 docker run --rm -e EMCC_WASM_BACKEND=1 -v $(pwd):/src truebit-toolchain:latest emcc -s WASM=1 ./src/reverse_alphabet.c -o ./src/reverse_alphabet.js
 
