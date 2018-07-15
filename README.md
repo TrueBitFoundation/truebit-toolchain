@@ -59,7 +59,7 @@ emcc -s WASM=1 ./src/reverse_alphabet.c -o ./src/reverse_alphabet.js
 (this bit fails due to pathing issues which I'm about to address)
 
 ```
-node modules/emscripten-module-wrapper/prepare.js ./src/reverse_alphabet.js --file ./src/alphabet.txt --file ./src/reverse_alphabet.txt --asmjs
+node modules/ocaml-offchain-preprocessor/prepare.js ./src/reverse_alphabet.js --file ./src/alphabet.txt --file ./src/reverse_alphabet.txt --asmjs
 ```
 
 
