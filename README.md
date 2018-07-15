@@ -59,7 +59,8 @@ emcc -s WASM=1 ./src/reverse_alphabet.c -o ./src/reverse_alphabet.js
 (this bit fails due to pathing issues which I'm about to address)
 
 ```
-node modules/ocaml-offchain-preprocessor/prepare.js ./src/reverse_alphabet.js --file ./src/alphabet.txt --file ./src/reverse_alphabet.txt --asmjs
+cd ./modules/ocaml-offchain-preprocessor
+node prepare.js ./reverse_alphabet.js --file ./alphabet.txt --file ./reverse_alphabet.txt --asmjs
 ```
 
 
