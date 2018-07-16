@@ -1,5 +1,14 @@
 # TrueBit Toolchain
 
+
+## Submodules
+
+Merging in latest changes:
+
+```
+git submodule update --remote --merge
+```
+
 ## MacOS Guide
 
 ## Setup EMSDK
@@ -108,24 +117,23 @@ STUB env . ___syscall6
 
 # Docker Guide
 
+The truebit-toolchain docker image is built from the submodules in the `./modules` directory.
+
+## Building the Docker Image
 
 ```
 docker build . -t truebit-toolchain:latest
+```
+
+
+```
+
 
 docker run -it truebit-toolchain:latest /bin/bash
-
-
 
 # Size in bytes
 # docker images
 # docker image inspect truebit-toolchain:latest --format='{{.Size}}'
-
-
-
-
-
-
-
 
 docker run -it -v $(pwd):/truebit-toolchain truebit-toolchain:latest /bin/bash
 
