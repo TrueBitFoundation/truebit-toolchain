@@ -1,0 +1,12 @@
+[submodule "modules/ocaml-offchain"]
+	path = modules/ocaml-offchain
+	url = https://github.com/TrueBitFoundation/ocaml-offchain.git
+[submodule "modules/webasm-solidity"]
+	path = modules/webasm-solidity
+	url = https://github.com/TrueBitFoundation/webasm-solidity.git
+[submodule "modules/emscripten-module-wrapper"]
+	path = modules/emscripten-module-wrapper
+	url = https://github.com/transmute-industries/emscripten-module-wrapper.git
+[submodule "modules/emsdk"]
+	path = modules/emsdk
+	url = https://github.com/juj/emsdk.git
