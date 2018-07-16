@@ -61,6 +61,12 @@ node ./modules/ocaml-offchain-preprocessor/prepare2.js ./src/reverse_alphabet.js
  ```
 
 
+
+
+./ocaml-offchain/interpreter/wasm -m -output -memory-size 16 -stack-size 14 -table-size 8 -globals-size 8 -call-stack-size 10 -file alphabet.txt -file reverse_alphabet.txt -wasm reverse_alphabet.wasm -asmjs
+
+
+
 ## Future docker support
 
 
