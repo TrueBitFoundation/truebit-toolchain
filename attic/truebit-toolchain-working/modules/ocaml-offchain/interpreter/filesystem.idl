@@ -1,4 +1,0 @@
-interface Module {
-  void initSystem();
-  int syscall5(i32 which, i32 arg);
-};

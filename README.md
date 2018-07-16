@@ -95,3 +95,16 @@ docker run --rm -e EMCC_WASM_BACKEND=1 -v $(pwd):/src truebit-toolchain:latest e
 
 docker run --rm -e EMCC_WASM_BACKEND=1 -v $(pwd):/src truebit-toolchain:latest ./src/work.sh
 ```
+
+[submodule "modules/ocaml-offchain"]
+	path = modules/ocaml-offchain
+	url = https://github.com/TrueBitFoundation/ocaml-offchain.git
+[submodule "modules/emscripten-module-wrapper"]
+	path = modules/emscripten-module-wrapper
+	url = https://github.com/TrueBitFoundation/emscripten-module-wrapper.git
+[submodule "modules/emsdk"]
+	path = modules/emsdk
+	url = https://github.com/juj/emsdk.git
+[submodule "modules/webasm-solidity"]
+	path = modules/webasm-solidity
+	url = https://github.com/TrueBitFoundation/webasm-solidity.git
