@@ -1,21 +1,21 @@
 FROM mhart/alpine-node:latest
 
 RUN apk update
-RUN apk --no-cache add bash git curl nodejs nodejs-npm
+RUN apk --no-cache add bash git curl nodejs nodejs-npm python
 
 SHELL ["/bin/bash", "-c"]
 
-COPY ./modules modules
+COPY . /truebit-toolchain
 
 # Install ocaml-offchain
 
-RUN apk --no-cache add build-base ocaml opam make m4 g++ zlib-dev gmp-dev perl python
+RUN apk --no-cache add build-base ocaml opam make m4 g++ zlib-dev gmp-dev perl 
 
 RUN opam init -y \
     && opam switch 4.06.1 \
     && eval `opam config env` \
     && opam install ocamlbuild cryptokit yojson -y \
-    && cd /modules/ocaml-offchain/interpreter \
+    && cd /truebit-toolchain/modules/ocaml-offchain/interpreter \
     && make
 
 
@@ -35,7 +35,7 @@ RUN apk --no-cache add emscripten emscripten-libs-asmjs emscripten-libs-wasm bin
 
 # Install the emscripten-module-wrapper
 
-RUN cd /modules/emscripten-module-wrapper \
+RUN cd /truebit-toolchain/modules/emscripten-module-wrapper \
     && npm install
 
 VOLUME ["/workspace"]
