@@ -1,6 +1,5 @@
 # TrueBit Toolchain
 
-
 ## Submodules
 
 Merging in latest changes:
