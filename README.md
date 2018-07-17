@@ -88,7 +88,9 @@ Success looks like this:
 
 Now test the interpreter:
 
+```
 ./modules/ocaml-offchain/interpreter/wasm -m -output -memory-size 16 -stack-size 14 -table-size 8 -globals-size 8 -call-stack-size 10 -file ./workspace/src/alphabet.txt -file ./workspace/src/reverse_alphabet.txt -wasm ./workspace/src/reverse_alphabet.wasm -asmjs
+```
 
 Success looks like this:
 
