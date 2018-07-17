@@ -36,10 +36,10 @@ cd  ../..
 Now lets test by compiling C to WASM!
 
 ```
-emcc -s WASM=1 ./src/reverse_alphabet.c -o ./src/reverse_alphabet.js
+emcc -s WASM=1 ./workspace/src/reverse_alphabet.c -o ./workspace/src/reverse_alphabet.js
 ```
 
-If all goes well, you will have `./src/reverse_alphabet.js` and `./src/reverse_alphabet.wasm`.
+If all goes well, you will have `./workspace/src/reverse_alphabet.js` and `./workspace/src/reverse_alphabet.wasm`.
 
 #### Setup Interpreter
 
@@ -118,6 +118,8 @@ STUB env . ___syscall6
 ## Docker Guide
 
 The truebit-toolchain docker image is built from the submodules in the `./modules` directory.
+
+The `./workspace` directory is meant to be mounted into the image, and can be used to compile, interpret and test wasm code.
 
 #### Building the Image 
 
