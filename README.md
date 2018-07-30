@@ -76,7 +76,7 @@ This will test both the compiled wasm code, the emscripten module wrapper and th
 
 
 ```
-node ./modules/emscripten-module-wrapper/prep.js ./workspace/src/reverse_alphabet.js --file ./workspace/src/alphabet.txt --file ./workspace/src/reverse_alphabet.txt --asmjs --out ./workspace/dist
+node ./modules/emscripten-module-wrapper/prepare.js ./workspace/src/reverse_alphabet.js --file ./workspace/src/alphabet.txt --file ./workspace/src/reverse_alphabet.txt --asmjs --out ./workspace/dist
 ```
 
 Success looks like this:
@@ -145,5 +145,5 @@ docker run --rm -e EMCC_WASM_BACKEND=1 -v $(pwd)/workspace:/workspace truebit-to
 #### Prepare WASM for TrueBit Interpreter
 
 ```
-docker run --rm -v $(pwd)/workspace:/workspace truebit-toolchain:latest node /truebit-toolchain/modules/emscripten-module-wrapper/prep.js /workspace/src/reverse_alphabet.js --file /workspace/src/alphabet.txt --file /workspace/src/reverse_alphabet.txt --asmjs --out /workspace/dist
+docker run --rm -v $(pwd)/workspace:/workspace truebit-toolchain:latest node /truebit-toolchain/modules/emscripten-module-wrapper/prepare.js /workspace/src/reverse_alphabet.js --file /workspace/src/alphabet.txt --file /workspace/src/reverse_alphabet.txt --asmjs --out /workspace/dist
 ```
