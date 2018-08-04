@@ -7,3 +7,6 @@
 [submodule "modules/emsdk"]
 	path = modules/emsdk
 	url = https://github.com/juj/emsdk.git
+[submodule "modules/emscripten-module-wrapper"]
+	path = modules/emscripten-module-wrapper
+	url = https://github.com/TrueBitFoundation/emscripten-module-wrapper.git
