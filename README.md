@@ -135,13 +135,20 @@ docker build . -t truebit-toolchain:latest
 
 ```
 docker run -it -v $(pwd)/workspace:/workspace truebit-toolchain:latest /bin/bash
+
 ```
 
 
 #### Compile C to WASM
 
+this is broken, the output from docker is different then local.
+
+local works, docker does not.
+
+this is only an issue with emcc
+
 ```
-docker run --rm -e EMCC_WASM_BACKEND=1 -v $(pwd)/workspace:/workspace truebit-toolchain:latest emcc -s WASM=1 /workspace/src/reverse_alphabet.c -o /workspace/src/reverse_alphabet.js
+docker run --rm -v $(pwd)/workspace:/workspace truebit-toolchain:latest  emcc -s WASM=1 /workspace/src/reverse_alphabet.c -o /workspace/src/reverse_alphabet.js
 ```
 
 #### Prepare WASM for TrueBit Interpreter
