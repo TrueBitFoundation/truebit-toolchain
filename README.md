@@ -1,6 +1,6 @@
 # TrueBit Toolchain
 
-[![Build Status](https://travis-ci.org/transmute-industries/truebit-toolchain.svg?branch=master)](https://travis-ci.org/transmute-industries/truebit-toolchain)
+[![Build Status](https://travis-ci.org/TrueBitFoundation/truebit-toolchain.svg?branch=master)](https://travis-ci.org/TrueBitFoundation/truebit-toolchain)
 
 ### Git Submodule Commands
 
