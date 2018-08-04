@@ -1,5 +1,7 @@
 # TrueBit Toolchain
 
+[![Build Status](https://travis-ci.org/transmute-industries/truebit-toolchain.svg?branch=master)](https://travis-ci.org/transmute-industries/truebit-toolchain)
+
 ### Git Submodule Commands
 
 Merging in latest changes:
