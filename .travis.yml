@@ -1,0 +1,7 @@
+sudo: required
+dist: trusty
+
+script: 
+  - docker build -t truebit-toolchain .
+  - docker run --rm -e EMCC_WASM_BACKEND=1 -v $(pwd)/workspace:/workspace truebit-toolchain:latest emcc -s WASM=1 /workspace/src/reverse_alphabet.c -o /workspace/src/reverse_alphabet.js
+  - docker run --rm -v $(pwd)/workspace:/workspace truebit-toolchain:latest node /truebit-toolchain/modules/emscripten-module-wrapper/prepare.js /workspace/src/reverse_alphabet.js --file /workspace/src/alphabet.txt --file /workspace/src/reverse_alphabet.txt --asmjs --out /workspace/dist
