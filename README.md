@@ -10,6 +10,40 @@ Merging in latest changes:
 git submodule update --remote --merge
 ```
 
+
+## Docker Guide
+
+The truebit-toolchain docker image is built from the submodules in the `./modules` directory.
+
+The `./workspace` directory is meant to be mounted into the image, and can be used to compile, interpret and test wasm code.
+
+#### Building the Image 
+
+```
+docker build . -t truebit-toolchain:latest
+```
+
+#### Open Bash
+
+```
+docker run -it -v $(pwd)/workspace:/workspace truebit-toolchain:latest /bin/bash
+
+```
+
+
+#### Compile C to WASM
+
+```
+docker run --rm -v $(pwd)/workspace:/workspace truebit-toolchain:latest  emcc -s WASM=1 /workspace/src/reverse_alphabet.c -o /workspace/src/reverse_alphabet.js
+```
+
+#### Prepare WASM for TrueBit Interpreter
+
+```
+docker run --rm -v $(pwd)/workspace:/workspace truebit-toolchain:latest node /truebit-toolchain/modules/emscripten-module-wrapper/prepare.js /workspace/src/reverse_alphabet.js --file /workspace/src/alphabet.txt --file /workspace/src/reverse_alphabet.txt --asmjs --out /workspace/dist
+```
+
+
 ## MacOS Guide
 
 #### Setup EMSDK
@@ -117,42 +151,4 @@ STUB env . ___unlock
 STUB env . nullFunc_iiii
 STUB env . ___syscall6
 {"vm": { "code": "0x8e891415c9620009e061e8f4a1bd6308c5b7c41cb65fbf4a697bbd675c145e3b", "stack": "0x2d52148999d6995f2d73f8676d9a0ca3ca07d5311c2b13400e762b2f232e7f50", "memory": "0xc93409e80b43d215e501e25b2b424acfd177f07dbb8e64296fe5a713c5c09c5a", "input_size": "0x593e5b969fbeac1646d534f40aeeb6d440f1b60353267ff7a67bb53a3a8f1125", "input_name": "0x9f4c2f7983a269a754906b124d17afdbdde81523d88233071058882c1fe72c0b", "input_data": "0x066ccee69369f2589250d208feef82cd3e06356124c01b9e9e8d56c9393e0e85", "call_stack": "0x817d9ede28dcb78bae11b94eb0965876da3e57f2f079fbd2f42a199b855d824e", "globals": "0x7d13b6d2d20d9a562a4d6286c9846b566ede5305ebd6da78c1bfc857696569ba", "calltable": "0xe712a0b2433b450758076aa5a00603d8080363fa1a34126455c15072305d993d", "calltypes": "0x87c337054355411efa7f7195bb1afd7078b79c10ce5abfb9e85ab5e36649a9ff", "pc": 1099511627775, "stack_ptr": 20, "call_ptr": 0, "memsize": 100000000 }, "hash": "0x84713b9950ce35a131222d0d54d0476406524cc28be1db0329e62e2d414c5d71", "steps": 27541, "files": ["./workspace/src/alphabet.txt.out","./workspace/src/reverse_alphabet.txt.out"]}
-```
-
-## Docker Guide
-
-The truebit-toolchain docker image is built from the submodules in the `./modules` directory.
-
-The `./workspace` directory is meant to be mounted into the image, and can be used to compile, interpret and test wasm code.
-
-#### Building the Image 
-
-```
-docker build . -t truebit-toolchain:latest
-```
-
-#### Open Bash
-
-```
-docker run -it -v $(pwd)/workspace:/workspace truebit-toolchain:latest /bin/bash
-
-```
-
-
-#### Compile C to WASM
-
-this is broken, the output from docker is different then local.
-
-local works, docker does not.
-
-this is only an issue with emcc
-
-```
-docker run --rm -v $(pwd)/workspace:/workspace truebit-toolchain:latest  emcc -s WASM=1 /workspace/src/reverse_alphabet.c -o /workspace/src/reverse_alphabet.js
-```
-
-#### Prepare WASM for TrueBit Interpreter
-
-```
-docker run --rm -v $(pwd)/workspace:/workspace truebit-toolchain:latest node /truebit-toolchain/modules/emscripten-module-wrapper/prepare.js /workspace/src/reverse_alphabet.js --file /workspace/src/alphabet.txt --file /workspace/src/reverse_alphabet.txt --asmjs --out /workspace/dist
 ```
