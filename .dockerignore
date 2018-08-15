@@ -1,0 +1,8 @@
+*/*/node_modules*
+
+*/*/webasm-solidity*
+
+*/*/emsdk*
+
+# its mounted
+workspace
