@@ -1,3 +1,6 @@
 
 # toolchain output directory
 workspace/dist
+workspace/reverse_alphabet/reverse_alphabet.js
+workspace/reverse_alphabet/target
+workspace/reverse_alphabet/Cargo.lock

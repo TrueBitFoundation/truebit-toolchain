@@ -8,13 +8,26 @@ The truebit-toolchain docker image is built from the submodules in the `./module
 
 The `./workspace` directory is meant to be mounted into the image, and used to compile, interpret and test wasm code.
 
-#### Building the Image 
+#### Building the Image
 
+Make sure to pull in all of this repos submodule dependencies
+```
+git submodule update --init --recursive
+```
+
+Now you can build the Image
 ```
 docker build . -t truebit-toolchain:latest
 ```
 
 #### Open Bash
+
+```
+chmod 755 scripts/open_bash.sh
+./scripts/open_bash.sh
+```
+
+Or
 
 ```
 docker run -it \
@@ -23,30 +36,39 @@ truebit-toolchain:latest \
 /bin/bash
 ```
 
+The rest of this README will assume you are in the bash inside Docker.
+
+### Compile Rust to WASM
+
+```
+source $HOME/.cargo/env
+cd reverse_alphabet
+cargo build --target wasm32-unknown-emscripten
+mv target/wasm32-unknown-emscripten/debug/reverse_alphabet.js .
+```
 
 #### Compile C to WASM
 
 ```
-docker run --rm \
--v $(pwd)/workspace:/workspace \
-truebit-toolchain:latest  \
+cd src
 emcc -s WASM=1 /workspace/src/reverse_alphabet.c -o /workspace/src/reverse_alphabet.js
 ```
 
 #### Prepare WASM for TrueBit Interpreter
 
+Once we've compiled our program to wasm this is the last step.
+
+You'll want to replace *DIR* with your project directory (ex: reverse_alphabet). Absolute paths work best.
+
 ```
-docker run --rm \
--v $(pwd)/workspace:/workspace \
-truebit-toolchain:latest \
+DIR=*DIR*
 node /truebit-toolchain/modules/emscripten-module-wrapper/prepare.js \
-/workspace/src/reverse_alphabet.js \
---file /workspace/src/alphabet.txt \
---file /workspace/src/reverse_alphabet.txt \
+/workspace/$DIR/reverse_alphabet.js \
+--file /workspace/$DIR/alphabet.txt \
+--file /workspace/$DIR/reverse_alphabet.txt \
 --asmjs \
 --out /workspace/dist
 ```
-
 
 ## MacOS Guide
 

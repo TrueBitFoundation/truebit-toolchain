@@ -1,0 +1,6 @@
+[package]
+name = "reverse_alphabet"
+version = "0.1.0"
+authors = ["hswick <hdswick@gmail.com>"]
+
+[dependencies]
