@@ -94,10 +94,9 @@ Successful compilation should print out something like this:
 }
 ```
 
-When submitting a truebit task you will only need a few thing.
+When submitting a truebit task you will only need a few things.
 
 The first being the hash field from the json output above. The second is the Truebit flavored wasm file you just created.
-
 If you look in `/workspace/dist` you should see a `globals.wasm` file. This will need to be uploaded to either IPFS or the Blockchain. The IPFS hash or the contract address will act as the storage address.
 
 ## MacOS Guide
