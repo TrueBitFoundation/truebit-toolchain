@@ -43,8 +43,8 @@ The rest of this README will assume you are in the bash inside Docker.
 ```
 source $HOME/.cargo/env
 cd reverse_alphabet
-cargo build --target wasm32-unknown-emscripten
-mv target/wasm32-unknown-emscripten/debug/reverse_alphabet.js .
+cargo build --target wasm32-unknown-emscripten --release
+mv target/wasm32-unknown-emscripten/release/{reverse_alphabet.js,reverse_alphabet.wasm} .
 ```
 
 #### Compile C to WASM
@@ -69,6 +69,36 @@ node /truebit-toolchain/modules/emscripten-module-wrapper/prepare.js \
 --asmjs \
 --out /workspace/dist
 ```
+
+Successful compilation should print out something like this:
+
+```
+{
+  "vm": {
+    "code": "0x3f6b3f1a468a34102140afb7dee16e7f2128e0cac5717f3eb7184eeba4a706d6",
+    "stack": "0xb4c11951957c6f8f642c4af61cd6b24640fec6dc7fc607ee8206a99e92410d30",
+    "memory": "0xb4c11951957c6f8f642c4af61cd6b24640fec6dc7fc607ee8206a99e92410d30",
+    "input_size": "0x6f55d147a0b66458280fda3caf4b46564bc7998544f3d78a503f328d970a31cd",
+    "input_name": "0x4da89d96f282aac9cc2d4042cf98d702afcedb9870f4f7afd221b138a34b72c4",
+    "input_data": "0xf2f7d1878bfcf422892f78a56702f2f142c3a55153fba767d241b7083ccf8260",
+    "call_stack": "0xb4c11951957c6f8f642c4af61cd6b24640fec6dc7fc607ee8206a99e92410d30",
+    "globals": "0xb4c11951957c6f8f642c4af61cd6b24640fec6dc7fc607ee8206a99e92410d30",
+    "calltable": "0x7bf9aa8e0ce11d87877e8b7a304e8e7105531771dbff77d1b00366ecb1549624",
+    "calltypes": "0xb4c11951957c6f8f642c4af61cd6b24640fec6dc7fc607ee8206a99e92410d30",
+    "pc": 0,
+    "stack_ptr": 0,
+    "call_ptr": 0,
+    "memsize": 0
+  },
+  "hash": "0x9ab5c445aebf76fceada9a1eaedc834cfe3697bfab725795e19e4def6793c1fb"
+}
+```
+
+When submitting a truebit task you will only need a few thing.
+
+The first being the hash field from the json output above. The second is the Truebit flavored wasm file you just created.
+
+If you look in `/workspace/dist` you should see a `globals.wasm` file. This will need to be uploaded to either IPFS or the Blockchain. The IPFS hash or the contract address will act as the storage address.
 
 ## MacOS Guide
 
